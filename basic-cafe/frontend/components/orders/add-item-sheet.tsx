@@ -29,15 +29,15 @@ export function AddItemSheet({ open, onOpenChange, orderId }: AddItemSheetProps)
   })
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[400px] sm:w-[480px] bg-zinc-950 border-zinc-800">
-        <SheetHeader><SheetTitle className="text-white">Add Item</SheetTitle></SheetHeader>
+      <SheetContent className="w-[400px] sm:w-[480px]">
+        <SheetHeader><SheetTitle className="text-foreground">Add Item</SheetTitle></SheetHeader>
         <div className="mt-6 space-y-5">
-          <div className="relative"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" /><Input placeholder="Search products..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" /></div>
+          <div className="relative"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" /><Input placeholder="Search products..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" /></div>
           <div className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto">
             {products.map((product) => (
-              <button key={product.id} onClick={() => { setSelectedProductId(product.id); setSelectedVariantId("") }} className={`rounded-lg border p-3 text-left transition-colors ${selectedProductId === product.id ? "border-indigo-500 bg-indigo-500/10" : "border-zinc-800 bg-zinc-900 hover:border-zinc-600"}`}>
-                <div className="text-sm font-medium text-white truncate">{product.name}</div>
-                <div className="text-xs text-zinc-400">{formatCurrency(product.basePrice)}</div>
+              <button key={product.id} onClick={() => { setSelectedProductId(product.id); setSelectedVariantId("") }} className={`rounded-lg border p-3 text-left transition-colors ${selectedProductId === product.id ? "border-foreground bg-secondary" : "border-border bg-background hover:border-foreground"}`}>
+                <div className="text-sm font-medium text-foreground truncate">{product.name}</div>
+                <div className="text-xs text-muted-foreground">{formatCurrency(product.basePrice)}</div>
               </button>
             ))}
           </div>
@@ -54,12 +54,12 @@ export function AddItemSheet({ open, onOpenChange, orderId }: AddItemSheetProps)
             <Label>Quantity</Label>
             <div className="flex items-center gap-3">
               <Button variant="outline" size="icon" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="h-8 w-8"><Minus className="h-3 w-3" /></Button>
-              <span className="w-8 text-center text-white font-medium">{quantity}</span>
+              <span className="w-8 text-center text-foreground font-medium">{quantity}</span>
               <Button variant="outline" size="icon" onClick={() => setQuantity(quantity + 1)} className="h-8 w-8"><Plus className="h-3 w-3" /></Button>
             </div>
           </div>
           <div className="space-y-2"><Label>Notes (optional)</Label><Input placeholder="e.g. No sugar" value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
-          <Button className="w-full bg-indigo-600 hover:bg-indigo-700" disabled={!selectedProductId || isPending} onClick={() => addItem()}>Add to Order</Button>
+          <Button className="w-full" disabled={!selectedProductId || isPending} onClick={() => addItem()}>Add to Order</Button>
         </div>
       </SheetContent>
     </Sheet>

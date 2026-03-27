@@ -23,8 +23,10 @@ export default function ReportsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Reports</h1>
-        <div className="flex gap-1 rounded-lg border border-zinc-800 p-1">{presets.map((p) => <Button key={p.label} variant={days === p.days ? "secondary" : "ghost"} size="sm" onClick={() => setDays(p.days)} className="text-xs">{p.label}</Button>)}</div>
+        <h1 className="text-2xl font-bold text-foreground">Reports</h1>
+        <div className="flex gap-1 rounded-lg border border-border p-1">
+          {presets.map((p) => <Button key={p.label} variant={days === p.days ? "secondary" : "ghost"} size="sm" onClick={() => setDays(p.days)} className="text-xs">{p.label}</Button>)}
+        </div>
       </div>
       {isLoading ? <LoadingSpinner /> : sales ? (
         <>
@@ -34,8 +36,8 @@ export default function ReportsPage() {
             <MetricCard title="Avg Ticket" value={formatCurrency(sales.avgTicket)} icon={Receipt} />
             <MetricCard title="Top Category" value={sales.topCategory || "—"} icon={Tag} />
           </div>
-          <Card className="bg-zinc-900 border-zinc-800 p-5"><h2 className="mb-4 text-base font-semibold text-white">Revenue Over Time</h2><SalesChart data={sales.revenueByDay} /></Card>
-          <Card className="bg-zinc-900 border-zinc-800 p-5"><h2 className="mb-4 text-base font-semibold text-white">Top Products</h2><TopProductsTable data={topProducts} /></Card>
+          <Card className="p-5"><h2 className="mb-4 text-base font-semibold text-foreground">Revenue Over Time</h2><SalesChart data={sales.revenueByDay} /></Card>
+          <Card className="p-5"><h2 className="mb-4 text-base font-semibold text-foreground">Top Products</h2><TopProductsTable data={topProducts} /></Card>
         </>
       ) : null}
     </div>

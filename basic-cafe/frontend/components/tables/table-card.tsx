@@ -8,7 +8,12 @@ import { cn } from "@/lib/utils"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { queryKeys } from "@/lib/api/query-keys"
 import { toast } from "sonner"
-const statusColors: Record<TableStatus, string> = { available: "border-emerald-500/40 hover:border-emerald-500", occupied: "border-orange-500/40 hover:border-orange-500", reserved: "border-indigo-500/40 hover:border-indigo-500", cleaning: "border-zinc-600 hover:border-zinc-500" }
+const statusAccent: Record<TableStatus, string> = {
+  available: "border-l-4 border-l-emerald-500",
+  occupied:  "border-l-4 border-l-orange-500",
+  reserved:  "border-l-4 border-l-blue-500",
+  cleaning:  "border-l-4 border-l-muted-foreground",
+}
 const statuses: TableStatus[] = ["available", "occupied", "reserved", "cleaning"]
 interface TableCardProps { table: Table; onClick?: (table: Table) => void }
 export function TableCard({ table, onClick }: TableCardProps) {
@@ -19,17 +24,25 @@ export function TableCard({ table, onClick }: TableCardProps) {
     onError: () => toast.error("Failed to update status"),
   })
   return (
-    <Card className={cn("relative flex flex-col gap-3 p-4 bg-zinc-900 border-2 cursor-pointer transition-colors", statusColors[table.status])} onClick={() => onClick?.(table)}>
+    <Card className={cn("relative flex flex-col gap-3 p-4 cursor-pointer hover:shadow-md transition-shadow", statusAccent[table.status] ?? "")} onClick={() => onClick?.(table)}>
       <div className="flex items-start justify-between">
-        <span className="text-xl font-bold text-white">Table {table.number}</span>
+        <span className="text-lg font-bold text-foreground">Table {table.number}</span>
         <DropdownMenu>
-          <DropdownMenuTrigger className="inline-flex h-7 w-7 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-700 hover:text-white transition-colors outline-none" onClick={(e) => e.stopPropagation()}><MoreVertical className="h-4 w-4" /></DropdownMenuTrigger>
+          <DropdownMenuTrigger className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:bg-secondary transition-colors outline-none" onClick={(e) => e.stopPropagation()}>
+            <MoreVertical className="h-4 w-4" />
+          </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {statuses.filter((s) => s !== table.status).map((s) => (<DropdownMenuItem key={s} onClick={(e) => { e.stopPropagation(); changeStatus(s) }} className="capitalize">Mark as {s}</DropdownMenuItem>))}
+            {statuses.filter((s) => s !== table.status).map((s) => (
+              <DropdownMenuItem key={s} onClick={(e) => { e.stopPropagation(); changeStatus(s) }} className="capitalize">
+                Mark as {s}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="flex items-center gap-1 text-sm text-zinc-400"><Users className="h-3.5 w-3.5" /><span>{table.capacity} seats</span></div>
+      <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+        <Users className="h-3.5 w-3.5" /><span>{table.capacity} seats</span>
+      </div>
       <TableStatusBadge status={table.status} />
     </Card>
   )

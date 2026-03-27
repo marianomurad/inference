@@ -20,19 +20,23 @@ export function Sidebar() {
   const pathname = usePathname()
   const { data: lowStock = [] } = useQuery({ queryKey: queryKeys.inventory(), queryFn: getLowStock, refetchInterval: 60_000 })
   return (
-    <aside className="flex h-screen w-60 flex-col border-r border-zinc-800 bg-zinc-950 px-3 py-4">
-      <div className="mb-8 flex items-center gap-2 px-3">
-        <Coffee className="h-6 w-6 text-indigo-400" />
-        <span className="text-lg font-semibold text-white">Basic Cafe</span>
+    <aside className="flex h-screen w-60 flex-col border-r border-border bg-background px-3 py-5">
+      <div className="mb-8 flex items-center gap-2.5 px-3">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent">
+          <Coffee className="h-4 w-4 text-accent-foreground" />
+        </div>
+        <span className="text-base font-semibold text-foreground tracking-tight">Basic Cafe</span>
       </div>
-      <nav className="flex flex-col gap-1">
+      <nav className="flex flex-col gap-0.5">
         {navItems.map((item) => {
           const active = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))
           return (
-            <Link key={item.href} href={item.href} className={cn("flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors", active ? "bg-indigo-600 text-white" : "text-zinc-400 hover:bg-zinc-800 hover:text-white")}>
+            <Link key={item.href} href={item.href} className={cn("flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors", active ? "bg-foreground text-background" : "text-muted-foreground hover:bg-secondary hover:text-foreground")}>
               <item.icon className="h-4 w-4 shrink-0" />
               <span>{item.label}</span>
-              {item.showLowStock && lowStock.length > 0 && <Badge variant="destructive" className="ml-auto text-xs px-1.5 py-0">{lowStock.length}</Badge>}
+              {item.showLowStock && lowStock.length > 0 && (
+                <Badge className="ml-auto h-5 text-xs px-1.5 bg-accent text-accent-foreground border-0 hover:bg-accent">{lowStock.length}</Badge>
+              )}
             </Link>
           )
         })}

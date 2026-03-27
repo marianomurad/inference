@@ -22,7 +22,7 @@ export default function DashboardLayout({
   }, [user, router]);
   if (!user) return null;
   return (
-    <div className="flex h-screen overflow-hidden bg-zinc-950">
+    <div className="flex h-screen overflow-hidden bg-background">
       <RealtimeProvider />
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">

@@ -16,7 +16,7 @@ export default function OrdersPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Orders</h1>
+        <h1 className="text-2xl font-bold text-foreground">Orders</h1>
         <Select value={status} onValueChange={(value) => setStatus(value ?? "all")}><SelectTrigger className="w-44"><SelectValue /></SelectTrigger><SelectContent>{statusOptions.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select>
       </div>
       {isLoading ? <LoadingSpinner /> : orders.length === 0 ? <EmptyState icon={ClipboardList} title="No orders found" description="Orders will appear here" /> : <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{orders.map((o) => <OrderCard key={o.id} order={o} />)}</div>}

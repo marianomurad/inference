@@ -16,21 +16,24 @@ export default function CheckoutPage({ params }: { params: Promise<{ orderId: st
   const { data: summary, isLoading } = useQuery({ queryKey: ["checkout", orderId], queryFn: () => getCheckoutSummary(orderId) })
   const { mutate: confirm, isPending } = useMutation({ mutationFn: () => confirmCheckout(orderId, { method }), onSuccess: () => { setPaid(true); toast.success("Payment confirmed!") }, onError: () => toast.error("Payment failed. Please try again.") })
   if (isLoading) return <LoadingSpinner />
-  if (!summary) return <div className="text-zinc-400">Order not found</div>
+  if (!summary) return <div className="text-muted-foreground">Order not found</div>
   if (paid) return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/20"><CheckCircle2 className="h-10 w-10 text-emerald-400" /></div>
-      <h2 className="text-2xl font-bold text-white">Payment Complete</h2>
-      <p className="mt-2 text-zinc-400">Thank you! The order has been marked as paid.</p>
-      <Button className="mt-6 bg-indigo-600 hover:bg-indigo-700" onClick={() => (window.location.href = "/tables")}>Back to Tables</Button>
+      <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50"><CheckCircle2 className="h-10 w-10 text-emerald-600" /></div>
+      <h2 className="text-2xl font-bold text-foreground">Payment Complete</h2>
+      <p className="mt-2 text-muted-foreground">Thank you! The order has been marked as paid.</p>
+      <Button className="mt-6" onClick={() => (window.location.href = "/tables")}>Back to Tables</Button>
     </div>
   )
   return (
     <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-white">Checkout</h1>
-      <Card className="bg-zinc-900 border-zinc-800 p-5"><BillSummary summary={summary} /></Card>
-      <div className="space-y-3"><h2 className="text-base font-semibold text-white">Payment Method</h2><PaymentMethodSelector value={method} onChange={setMethod} /></div>
-      <Button className="w-full bg-emerald-600 hover:bg-emerald-700 h-12 text-base font-semibold" onClick={() => confirm()} disabled={isPending}>{isPending ? "Processing..." : "Confirm Payment"}</Button>
+      <h1 className="text-2xl font-bold text-foreground">Checkout</h1>
+      <Card className="p-5"><BillSummary summary={summary} /></Card>
+      <div className="space-y-3">
+        <h2 className="text-base font-semibold text-foreground">Payment Method</h2>
+        <PaymentMethodSelector value={method} onChange={setMethod} />
+      </div>
+      <Button className="w-full h-12 text-base font-semibold bg-emerald-600 hover:bg-emerald-700 text-white" onClick={() => confirm()} disabled={isPending}>{isPending ? "Processing..." : "Confirm Payment"}</Button>
     </div>
   )
 }

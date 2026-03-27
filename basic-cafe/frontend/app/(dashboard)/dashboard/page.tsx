@@ -20,10 +20,10 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
         <div className="flex gap-2">
           <Link href="/tables"><Button variant="outline" size="sm" className="gap-2"><Grid3X3 className="h-4 w-4" /> View Tables</Button></Link>
-          <Link href="/orders"><Button size="sm" className="gap-2 bg-indigo-600 hover:bg-indigo-700"><Plus className="h-4 w-4" /> New Order</Button></Link>
+          <Link href="/orders"><Button size="sm" className="gap-2"><Plus className="h-4 w-4" /> New Order</Button></Link>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -33,7 +33,7 @@ export default function DashboardPage() {
         <MetricCard title="Low Stock Alerts" value={String(lowStock.length)} icon={AlertTriangle} />
       </div>
       <div>
-        <h2 className="mb-3 text-lg font-semibold text-white">Open Orders</h2>
+        <h2 className="mb-3 text-lg font-semibold text-foreground">Open Orders</h2>
         {isLoading ? <LoadingSpinner /> : <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{openOrders.slice(0, 8).map((order) => <OrderCard key={order.id} order={order} />)}</div>}
       </div>
     </div>

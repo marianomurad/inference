@@ -31,7 +31,7 @@ export function IngressForm() {
         </div>
         <FormField control={form.control} name="supplier" render={({ field }) => (<FormItem><FormLabel>Supplier</FormLabel><FormControl><Input placeholder="Supplier name" {...field} /></FormControl><FormMessage /></FormItem>)} />
         <div className="flex gap-3">
-          <Button type="submit" disabled={isPending} className="bg-indigo-600 hover:bg-indigo-700">{isPending ? "Saving..." : "Record Ingress"}</Button>
+          <Button type="submit" disabled={isPending}>{isPending ? "Saving..." : "Record Ingress"}</Button>
           <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
         </div>
       </form>

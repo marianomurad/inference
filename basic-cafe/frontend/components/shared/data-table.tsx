@@ -13,16 +13,16 @@ export function DataTable<TData, TValue>({ columns, data, searchKey, searchPlace
   return (
     <div className="space-y-4">
       {searchKey && <Input placeholder={searchPlaceholder} value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""} onChange={(e) => table.getColumn(searchKey)?.setFilterValue(e.target.value)} className="max-w-sm" />}
-      <div className="rounded-md border border-zinc-800">
+      <div className="rounded-md border border-border">
         <Table>
-          <TableHeader>{table.getHeaderGroups().map((hg) => (<TableRow key={hg.id} className="border-zinc-800">{hg.headers.map((h) => (<TableHead key={h.id} className="text-zinc-400">{h.isPlaceholder ? null : flexRender(h.column.columnDef.header, h.getContext())}</TableHead>))}</TableRow>))}</TableHeader>
+          <TableHeader>{table.getHeaderGroups().map((hg) => (<TableRow key={hg.id}>{hg.headers.map((h) => (<TableHead key={h.id} className="text-muted-foreground">{h.isPlaceholder ? null : flexRender(h.column.columnDef.header, h.getContext())}</TableHead>))}</TableRow>))}</TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? table.getRowModel().rows.map((row) => (<TableRow key={row.id} className="border-zinc-800 hover:bg-zinc-800/50">{row.getVisibleCells().map((cell) => (<TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>))}</TableRow>)) : (<TableRow><TableCell colSpan={columns.length} className="h-24 text-center text-zinc-500">No results.</TableCell></TableRow>)}
+            {table.getRowModel().rows?.length ? table.getRowModel().rows.map((row) => (<TableRow key={row.id} className="hover:bg-secondary/50">{row.getVisibleCells().map((cell) => (<TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>))}</TableRow>)) : (<TableRow><TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">No results.</TableCell></TableRow>)}
           </TableBody>
         </Table>
       </div>
       <div className="flex items-center justify-end gap-2">
-        <span className="text-sm text-zinc-500">Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</span>
+        <span className="text-sm text-muted-foreground">Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</span>
         <Button variant="outline" size="icon" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}><ChevronLeft className="h-4 w-4" /></Button>
         <Button variant="outline" size="icon" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}><ChevronRight className="h-4 w-4" /></Button>
       </div>

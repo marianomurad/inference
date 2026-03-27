@@ -8,8 +8,8 @@ export function Breadcrumbs() {
   const segments = pathname.split("/").filter(Boolean)
   if (segments.length === 0) return null
   return (
-    <nav className="flex items-center gap-1 text-sm text-zinc-400">
-      <Link href="/dashboard" className="hover:text-white transition-colors">Home</Link>
+    <nav className="flex items-center gap-1 text-sm text-muted-foreground">
+      <Link href="/dashboard" className="hover:text-foreground transition-colors">Home</Link>
       {segments.map((seg, i) => {
         const href = "/" + segments.slice(0, i + 1).join("/")
         const label = labelMap[seg] ?? seg
@@ -17,7 +17,9 @@ export function Breadcrumbs() {
         return (
           <span key={href} className="flex items-center gap-1">
             <ChevronRight className="h-3 w-3" />
-            {isLast ? <span className="text-white font-medium">{label}</span> : <Link href={href} className="hover:text-white transition-colors">{label}</Link>}
+            {isLast
+              ? <span className="text-foreground font-medium">{label}</span>
+              : <Link href={href} className="hover:text-foreground transition-colors">{label}</Link>}
           </span>
         )
       })}
